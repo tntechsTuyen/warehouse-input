@@ -15,7 +15,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Integer login(User user) {
-        User uInfo = userRepository.findAll().get(0);
+        User uInfo = userRepository.findByUsername(user.getUsername());
         System.out.println("DATA___________: "+uInfo.getPassword());
         if(uInfo == null) return null;
         String passEncode = CryptoUtils.BCrypt(user.getPassword());
