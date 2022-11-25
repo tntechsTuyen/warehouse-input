@@ -22,8 +22,8 @@ public class RequestFilter implements HandlerInterceptor {
         System.out.println("filter data");
         boolean permission = true;
         try{
-            Object oauth = session.getAttribute(env.getProperty("session.login"));
-            permission = (null == oauth) ? false : true;
+            Integer idUser = (Integer) session.getAttribute(env.getProperty("session.login"));
+            permission = (null == idUser) ? false : true;
         }catch (Exception e){
             permission = false;
         }

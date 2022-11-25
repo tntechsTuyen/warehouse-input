@@ -1,6 +1,7 @@
 package com.sys.warehouse.controller;
 
 import com.sys.warehouse.dto.User;
+import com.sys.warehouse.service.ISupplierService;
 import com.sys.warehouse.service.IUserService;
 import com.sys.warehouse.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,10 @@ public class IndexController {
     private Environment env;
 
     @Autowired
-    private UserServiceImpl userService;
+    private IUserService userService;
+
+    @Autowired
+    private ISupplierService supplierService;
 
     @GetMapping({"/", "home"})
     public String goIndex(){
@@ -38,9 +42,15 @@ public class IndexController {
     @PostMapping("/login")
     public String doLogin(HttpSession session, @ModelAttribute("loginForm") User user){
         Integer idUser = userService.login(user);
+        System.out.println("DataLogin: "+idUser);
         if(idUser == null) return "redirect:/login";
         session.setAttribute(env.getProperty("session.login"), idUser);
         return "redirect:/home";
     }
 
+    @GetMapping("/supplier")
+    public String goSupplier(Model model){
+        model.addAttribute("list", supplierService.getAll());
+        return "supplier";
+    }
 }

@@ -5,6 +5,7 @@ import com.sys.warehouse.dao.UserRepository;
 import com.sys.warehouse.dto.User;
 import com.sys.warehouse.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,10 +17,8 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Integer login(User user) {
         User uInfo = userRepository.findByUsername(user.getUsername());
-        System.out.println("DATA___________: "+uInfo.getPassword());
         if(uInfo == null) return null;
-        String passEncode = CryptoUtils.BCrypt(user.getPassword());
-        if(!uInfo.getPassword().equals(passEncode)) return null;
+        if(!BCrypt.checkpw(user.getPassword(), uInfo.getPassword())) return null;
         return uInfo.getId();
     }
 }
