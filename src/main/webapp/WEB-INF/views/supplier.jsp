@@ -27,7 +27,7 @@
 
 			<div class="panel panel-inverse">
 				<div class="panel-heading">
-			    	<h4 class="panel-title">Danh sách <input type="text" name="" placeholder="Tìm kiếm"></h4>
+			    	<h4 class="panel-title">Danh sách <input type="text" name="" placeholder="Tìm kiếm" id="ip-search"></h4>
 				    <div class="panel-heading-btn">
 				    	<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
 				    	<a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
@@ -35,23 +35,28 @@
 				    </div>
 				</div>
 				<div class="panel-body">
-					<table class="table table-bordered table-hover">
+					<table id="tbl-supplier" class="table table-bordered table-hover">
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Tài khoản</th>
+								<th>Mã</th>
 								<th>Tên</th>
-								<th>Số ĐT</th>
-								<th>Email</th>
-								<th>Ngày sinh</th>
-								<th>Giới tính</th>
-								<th>Quyền hạn</th>
-								<th>Ngày tạo</th>
+								<th>Địa chỉ</th>
+								<th>SĐT</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							
+                            <c:forEach items="${list}" var="item" varStatus="loop">
+                            	<tr>
+                            		<td>${loop.index + 1}</td>
+                            		<td>${item.code}</td>
+                            		<td>${item.name}</td>
+                            		<td>${item.address}</td>
+                            		<td>${item.phone}</td>
+                            		<td><a href="/supplier/${item.id}/order" class="btn btn-primary"><i class="fas fa-arrow-alt-circle-right"></i></a></td>
+                            	</tr>
+                            </c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -60,8 +65,12 @@
 	</div>
 </body>
 <script>
-	$("#ip-customer-phone").keyup(delay(async function(e){
-        
-    }, 1500))
+	$("#ip-search").keyup(function(){
+		const text = $(this).val()
+	})
+
+	$("#tbl-supplier>tbody tr").each(function(){
+		console.log($(this).text().includes("NCCDDD"))
+	})
 </script>
 </html>
