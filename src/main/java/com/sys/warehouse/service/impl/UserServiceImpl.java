@@ -1,6 +1,5 @@
 package com.sys.warehouse.service.impl;
 
-import com.sys.warehouse.common.utils.CryptoUtils;
 import com.sys.warehouse.dao.UserRepository;
 import com.sys.warehouse.dto.User;
 import com.sys.warehouse.service.IUserService;

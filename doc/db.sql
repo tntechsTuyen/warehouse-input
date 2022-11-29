@@ -20,16 +20,26 @@ USE `warehouse`;
 -- Dumping structure for table warehouse.order_in
 CREATE TABLE IF NOT EXISTS `order_in` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` char(50) DEFAULT NULL,
   `id_supplier` int(11) DEFAULT NULL,
   `id_user` int(11) DEFAULT NULL,
+  `id_status` int(11) DEFAULT NULL COMMENT '1: draf | 2: success',
   `total_price` double DEFAULT NULL,
   `created_date` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
 
 -- Dumping data for table warehouse.order_in: ~0 rows (approximately)
 DELETE FROM `order_in`;
 /*!40000 ALTER TABLE `order_in` DISABLE KEYS */;
+INSERT INTO `order_in` (`id`, `code`, `id_supplier`, `id_user`, `id_status`, `total_price`, `created_date`) VALUES
+	(1, 'N1669705257465', 1, 1, 1, 10000, '2022-11-29 11:50:05'),
+	(2, '1669714808727', 1, 1, 1, 100000, '2022-11-29 16:40:20'),
+	(3, '1669714946980', 1, 1, 1, 100000, '2022-11-29 16:42:27'),
+	(4, '1669715121680', 1, 1, 1, 100000, '2022-11-29 16:45:21'),
+	(5, '1669715197206', 1, 1, 1, 100000, '2022-11-29 16:46:37'),
+	(6, '1669715333049', 1, 1, 1, 100000, '2022-11-29 16:48:53'),
+	(7, '1669715639468', 1, 1, 1, 100000, '2022-11-29 16:53:59');
 /*!40000 ALTER TABLE `order_in` ENABLE KEYS */;
 
 -- Dumping structure for table warehouse.order_in_detail
@@ -38,13 +48,23 @@ CREATE TABLE IF NOT EXISTS `order_in_detail` (
   `id_order_in` int(11) DEFAULT NULL,
   `id_product` int(11) DEFAULT NULL,
   `qty` int(11) DEFAULT NULL,
-  `price` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 
 -- Dumping data for table warehouse.order_in_detail: ~0 rows (approximately)
 DELETE FROM `order_in_detail`;
 /*!40000 ALTER TABLE `order_in_detail` DISABLE KEYS */;
+INSERT INTO `order_in_detail` (`id`, `id_order_in`, `id_product`, `qty`) VALUES
+	(1, 2, 1, 1),
+	(2, 3, 1, 1),
+	(3, 3, 2, 1),
+	(4, 4, 1, 1),
+	(5, 4, 2, 1),
+	(6, 5, 1, 1),
+	(7, 7, 2, 1),
+	(8, 6, 1, 1),
+	(9, 6, 2, 1),
+	(10, 7, 1, 1);
 /*!40000 ALTER TABLE `order_in_detail` ENABLE KEYS */;
 
 -- Dumping structure for table warehouse.product
@@ -53,13 +73,17 @@ CREATE TABLE IF NOT EXISTS `product` (
   `id_supplier` int(11) DEFAULT NULL,
   `code` varchar(10) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
+  `price` double DEFAULT NULL,
   `qty` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 
--- Dumping data for table warehouse.product: ~0 rows (approximately)
+-- Dumping data for table warehouse.product: ~1 rows (approximately)
 DELETE FROM `product`;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` (`id`, `id_supplier`, `code`, `name`, `price`, `qty`) VALUES
+	(1, 1, 'sn000001', 'Product 1', 100000, 2),
+	(2, 1, 'sn000002', 'Product 2', 50000, 3);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 
 -- Dumping structure for table warehouse.supplier
@@ -70,13 +94,17 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `address` varchar(100) DEFAULT NULL,
   `phone` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 
--- Dumping data for table warehouse.supplier: ~0 rows (approximately)
+-- Dumping data for table warehouse.supplier: ~5 rows (approximately)
 DELETE FROM `supplier`;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
 INSERT INTO `supplier` (`id`, `code`, `name`, `address`, `phone`) VALUES
-	(1, 'ncc00001', 'NCC 1', 'Hà Nội', '0331778886');
+	(1, 'ncc00001', 'NCC 1', 'Hà Nội', '0331778886'),
+	(2, 'ncc00002', 'NCC 2', 'Hải Phòng', '0973374474'),
+	(3, 'ncc00003', 'NCC 3', 'Hải Dương', '0986213312'),
+	(4, 'ncc00004', 'NCC 4', 'Bắc Giang', '0412345786'),
+	(5, 'ncc00005', 'NCC 5', 'Hòa Bình', '097462345');
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 
 -- Dumping structure for table warehouse.user

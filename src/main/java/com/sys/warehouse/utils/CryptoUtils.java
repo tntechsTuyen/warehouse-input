@@ -1,4 +1,4 @@
-package com.sys.warehouse.common.utils;
+package com.sys.warehouse.utils;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

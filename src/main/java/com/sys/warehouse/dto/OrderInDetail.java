@@ -23,7 +23,15 @@ public class OrderInDetail {
     @Column(name = "qty")
     private Integer qty;
 
-    @Column(name = "price")
+    @Transient
     private Double price;
 
+    @Transient
+    private Integer idSupplier;
+
+    public OrderInDetail(){}
+
+    public OrderInDetail(Integer idOrderIn){
+        this.idOrderIn = idOrderIn;
+    }
 }

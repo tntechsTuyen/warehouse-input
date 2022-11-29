@@ -17,10 +17,10 @@ public class Supplier {
     private Integer id;
 
     @Column(name = "code", unique=true)
-    private String code;
+    private String code = "";
 
     @Column(name = "name")
-    private String name;
+    private String name = "";
 
     @Column(name = "address")
     private String address;
@@ -28,4 +28,10 @@ public class Supplier {
     @Column(name = "phone")
     private String phone;
 
+    public Supplier(){}
+
+    public Supplier(String code, String name){
+        this.code = code;
+        this.name = name;
+    }
 }

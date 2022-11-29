@@ -16,14 +16,20 @@ public class OrderIn {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "id_supplier")
-    private Integer idSupplier;
+    @Column(name = "code")
+    private String code;
 
-    @Column(name = "id_product")
-    private Integer idProduct;
+    @Column(name = "id_supplier")
+    private Integer idSupplier = 0;
+
+    @Column(name = "id_user")
+    private Integer idUser;
+
+    @Column(name = "id_status")
+    private Integer idStatus;
 
     @Column(name = "total_price")
-    private Double name;
+    private Double totalPrice;
 
     @CreationTimestamp
     @Column(name = "created_date", updatable = false)

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ISupplierService {
     List<Supplier> getAll();
+    List<Supplier> getList(Supplier supplier);
+    Supplier save(Supplier supplier);
 }

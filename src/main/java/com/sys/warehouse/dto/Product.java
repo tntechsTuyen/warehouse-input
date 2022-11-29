@@ -26,4 +26,13 @@ public class Product {
     @Column(name = "qty")
     private Integer qty;
 
+    @Column(name = "price")
+    private Double price;
+
+    public Product(){}
+
+    public Product(Integer idSupplier){
+        this.idSupplier = idSupplier;
+    }
+
 }

@@ -47,10 +47,4 @@ public class IndexController {
         session.setAttribute(env.getProperty("session.login"), idUser);
         return "redirect:/home";
     }
-
-    @GetMapping("/supplier")
-    public String goSupplier(Model model){
-        model.addAttribute("list", supplierService.getAll());
-        return "supplier";
-    }
 }

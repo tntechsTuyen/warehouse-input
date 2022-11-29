@@ -18,4 +18,14 @@ public class SupplierServiceImpl implements ISupplierService {
     public List<Supplier> getAll() {
         return supplierRepository.findAll();
     }
+
+    @Override
+    public List<Supplier> getList(Supplier supplier) {
+        return supplierRepository.selectByLikeName(supplier.getName());
+    }
+
+    @Override
+    public Supplier save(Supplier supplier) {
+        return supplierRepository.save(supplier);
+    }
 }
