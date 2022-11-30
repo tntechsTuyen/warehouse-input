@@ -17,17 +17,17 @@ public class Product {
     @Column(name = "id_supplier")
     private Integer idSupplier;
 
-    @Column(name = "code")
+    @Column(name = "code", unique = true)
     private String code;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "qty")
-    private Integer qty;
+    private Integer qty = 0;
 
     @Column(name = "price")
-    private Double price;
+    private Integer price;
 
     public Product(){}
 
@@ -35,4 +35,11 @@ public class Product {
         this.idSupplier = idSupplier;
     }
 
+    public Product(Integer idSupplier, String code, String name, Integer qty, Integer price) {
+        this.idSupplier = idSupplier;
+        this.code = code;
+        this.name = name;
+        this.qty = qty;
+        this.price = price;
+    }
 }

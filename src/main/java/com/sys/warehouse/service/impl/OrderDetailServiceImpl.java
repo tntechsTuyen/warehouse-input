@@ -1,6 +1,7 @@
 package com.sys.warehouse.service.impl;
 
 import com.sys.warehouse.dao.OrderDetailRepository;
+import com.sys.warehouse.dao.OrderRepository;
 import com.sys.warehouse.dto.OrderInDetail;
 import com.sys.warehouse.service.IOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
     @Autowired
     private OrderDetailRepository orderDetailRepository;
 
+    @Autowired
+    private OrderRepository orderRepository;
+
     @Override
     public List<Map<String, Object>> selectList(OrderInDetail orderInDetail) {
         return orderDetailRepository.selectList(orderInDetail.getIdOrderIn());
@@ -23,11 +27,13 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
     @Override
     public OrderInDetail save(OrderInDetail orderInDetail) {
         orderDetailRepository.save(orderInDetail);
+        orderRepository.updatePrice(orderInDetail.getIdOrderIn());
         return orderInDetail;
     }
 
     @Override
     public void delete(OrderInDetail orderInDetail) {
-        orderDetailRepository.delete(orderInDetail);
+//        orderDetailRepository.delete(orderInDetail);
+        orderRepository.updatePrice(orderInDetail.getIdOrderIn());
     }
 }

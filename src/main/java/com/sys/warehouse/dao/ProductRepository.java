@@ -14,7 +14,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query(" SELECT p " +
             " FROM Product p " +
-            " WHERE (:idSupplier = 0 OR p.idSupplier = :idSupplier) ")
-    List<Product> selectList(@Param("idSupplier") Integer idSupplier);
+            " WHERE (:idSupplier = 0 OR p.idSupplier = :idSupplier) " +
+            " AND (:code = '' OR p.code = :code) ")
+    List<Product> selectList(@Param("idSupplier") Integer idSupplier, @Param("code") String code);
 
 }

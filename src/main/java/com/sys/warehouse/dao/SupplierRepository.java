@@ -11,8 +11,9 @@ import java.util.List;
 @Repository("supplierRepository")
 public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
 
-    @Query("SELECT s FROM Supplier s " +
-            "WHERE (:name = '' OR s.name LIKE %:name%) ")
-    List<Supplier> selectByLikeName(@Param("name") String name);
+    @Query(" SELECT s FROM Supplier s " +
+            " WHERE (:code = '' OR s.code = :code) " +
+            " AND (:name = '' OR s.name LIKE %:name%) ")
+    List<Supplier> selectList(@Param("code") String code, @Param("name") String name);
 
 }

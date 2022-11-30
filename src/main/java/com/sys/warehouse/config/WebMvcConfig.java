@@ -1,6 +1,8 @@
 package com.sys.warehouse.config;
 
 import com.sys.warehouse.config.filter.RequestFilter;
+import com.sys.warehouse.service.IProductService;
+import com.sys.warehouse.service.impl.ProductServiceImpl;
 import org.springframework.context.annotation.Bean;
 
 import org.springframework.context.annotation.ComponentScan;
@@ -54,4 +56,5 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		filter.setForceEncoding(true);
 		return filter;
 	}
+
 }

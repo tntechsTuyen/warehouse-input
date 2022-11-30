@@ -32,7 +32,7 @@ public class SupplierController {
     }
 
     @PostMapping(path = "", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public String doSupplier(HttpServletRequest request, @ModelAttribute("supplierForm") Supplier supplier){
+    public String doSupplier(HttpServletRequest request, @ModelAttribute("supplierForm") Supplier supplier) throws Exception {
         supplier.setName(supplier.getName().split(",")[0]);
         supplierService.save(supplier);
         return UrlUtils.getPreviousPageByRequest(request).orElse("/");

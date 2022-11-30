@@ -39,7 +39,7 @@
 							<div class="input-group mb-3">
                                 <span class="input-group-text">Tìm kiếm</span>
                                 <input id="ip-search" class="form-control"/>
-                                <button class="btn btn-primary btn-add-product d-none"><i class="fas fa-plus-circle me-1"></i>Add</button>
+                                <button class="btn btn-primary btn-create-product d-none" data-bs-toggle="modal" data-bs-target="#modalAddNew"><i class="fas fa-plus-circle me-1"></i>Create</button>
                             </div>
 							<table id="tbl-product" class="table table-bordered">
 								<thead>
@@ -126,37 +126,32 @@
 	</div>
 
 	<!-- Modal -->
-    <form:form modelAttribute="productForm" method="POST">
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form:form modelAttribute="productForm" method="POST" action="/product/add">
+	<div class="modal fade" id="modalAddNew" tabindex="-1" aria-labelledby="modalAddNewLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+	        <h5 class="modal-title" id="modalAddNewLabel">Thông tin sản phẩm</h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
         	<div class="form-floating">
+			  <form:hidden path="idSupplier" />
 			  <form:input path="code" type="text" cssClass="form-control fs-15px" />
 			  <label for="code" class="d-flex align-items-center fs-13px">
-			    Mã nhà cung ứng
+			    Mã SP
 			  </label>
 			</div>
         	<div class="form-floating mt-2">
 			  <form:input path="name" type="text" cssClass="form-control fs-15px" />
 			  <label for="name" class="d-flex align-items-center fs-13px">
-			    Tên nhà cung ứng
+			    Tên SP
 			  </label>
 			</div>
         	<div class="form-floating mt-2">
-			  <form:input path="address" type="text" cssClass="form-control fs-15px" />
-			  <label for="address" class="d-flex align-items-center fs-13px">
-			    Địa chỉ
-			  </label>
-			</div>
-        	<div class="form-floating mt-2">
-			  <form:input path="phone" type="number" cssClass="form-control fs-15px" />
-			  <label for="phone" class="d-flex align-items-center fs-13px">
-			    Số điện thoại
+			  <form:input path="price" type="number" cssClass="form-control fs-15px" />
+			  <label for="price" class="d-flex align-items-center fs-13px">
+			    Giá
 			  </label>
 			</div>
 	      </div>
@@ -172,11 +167,11 @@
 </body>
 <script>
 	$("#ip-search").keyup(function(){
-		const text = $(this).val()
+		const text = $(this).val().toLowerCase()
 		var total = 0
 		$("#tbl-product>tbody tr").each(function(){
 			console.log($(this))
-			if($(this).text().includes(text)) {
+			if($(this).text().toLowerCase().includes(text)) {
 				total++
 				$(this).removeClass("d-none");
 			}else{
@@ -184,12 +179,13 @@
 			}
 		})
 		if(total==0){
-			$(".btn-add-product").removeClass("d-none")
+			$(".btn-create-product").removeClass("d-none")
+			$(`[name="name"]`).val(text)
 		}else{
-			$(".btn-add-product").addClass("d-none")
+			$(".btn-create-product").addClass("d-none")
 		}
-
 	})
+
 	$(".btn-add-product").click(function(){
 		const data = {
 			id: $(this).data("id"),

@@ -77,5 +77,4 @@ public class OrderController {
         orderDetailService.save(orderInDetail);
         return String.format("redirect: /order/add?idSupplier=%d&id=%d", order.getIdSupplier(), order.getId());
     }
-
 }

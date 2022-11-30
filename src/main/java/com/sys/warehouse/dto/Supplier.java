@@ -34,4 +34,11 @@ public class Supplier {
         this.code = code;
         this.name = name;
     }
+
+    public Supplier(String code, String name, String address, String phone) {
+        this.code = code;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+    }
 }
