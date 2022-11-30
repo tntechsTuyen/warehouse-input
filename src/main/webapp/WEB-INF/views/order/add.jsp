@@ -37,10 +37,11 @@
 						</div>
 						<div class="panel-body">
 							<div class="input-group mb-3">
-                                <span class="input-group-text">Tên SP</span>
+                                <span class="input-group-text">Tìm kiếm</span>
                                 <input id="ip-search" class="form-control"/>
+                                <button class="btn btn-primary btn-add-product d-none"><i class="fas fa-plus-circle me-1"></i>Add</button>
                             </div>
-							<table class="table table-bordered">
+							<table id="tbl-product" class="table table-bordered">
 								<thead>
 									<tr>
 										<th>#</th>
@@ -124,17 +125,71 @@
 		</div>
 	</div>
 
+	<!-- Modal -->
+    <form:form modelAttribute="productForm" method="POST">
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+        	<div class="form-floating">
+			  <form:input path="code" type="text" cssClass="form-control fs-15px" />
+			  <label for="code" class="d-flex align-items-center fs-13px">
+			    Mã nhà cung ứng
+			  </label>
+			</div>
+        	<div class="form-floating mt-2">
+			  <form:input path="name" type="text" cssClass="form-control fs-15px" />
+			  <label for="name" class="d-flex align-items-center fs-13px">
+			    Tên nhà cung ứng
+			  </label>
+			</div>
+        	<div class="form-floating mt-2">
+			  <form:input path="address" type="text" cssClass="form-control fs-15px" />
+			  <label for="address" class="d-flex align-items-center fs-13px">
+			    Địa chỉ
+			  </label>
+			</div>
+        	<div class="form-floating mt-2">
+			  <form:input path="phone" type="number" cssClass="form-control fs-15px" />
+			  <label for="phone" class="d-flex align-items-center fs-13px">
+			    Số điện thoại
+			  </label>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    </form:form>
+	<!-- * Modal -->
 </body>
 <script>
 	$("#ip-search").keyup(function(){
 		const text = $(this).val()
-		console.log(text)
-	})
+		var total = 0
+		$("#tbl-product>tbody tr").each(function(){
+			console.log($(this))
+			if($(this).text().includes(text)) {
+				total++
+				$(this).removeClass("d-none");
+			}else{
+				$(this).addClass("d-none");
+			}
+		})
+		if(total==0){
+			$(".btn-add-product").removeClass("d-none")
+		}else{
+			$(".btn-add-product").addClass("d-none")
+		}
 
-	$("#tbl-product-selected>tbody tr").each(function(){
-		console.log($(this).text().includes("000001"))
 	})
-
 	$(".btn-add-product").click(function(){
 		const data = {
 			id: $(this).data("id"),

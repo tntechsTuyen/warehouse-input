@@ -56,6 +56,7 @@ public class OrderController {
         model.addAttribute("orderDetails", orderDetailService.selectList(new OrderInDetail(search.getId())));
         model.addAttribute("idOrder", search.getId());
         model.addAttribute("idSupplier", search.getIdSupplier());
+        model.addAttribute("productForm", new Product(search.getIdSupplier()));
         return "order/add";
     }
 
