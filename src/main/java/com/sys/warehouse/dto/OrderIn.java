@@ -29,7 +29,7 @@ public class OrderIn {
     private Integer idStatus;
 
     @Column(name = "total_price")
-    private Double totalPrice;
+    private Integer totalPrice;
 
     @CreationTimestamp
     @Column(name = "created_date", updatable = false)

@@ -24,7 +24,7 @@ public class OrderInDetail {
     private Integer qty;
 
     @Transient
-    private Double price;
+    private Integer price;
 
     @Transient
     private Integer idSupplier;

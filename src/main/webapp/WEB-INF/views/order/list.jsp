@@ -71,7 +71,6 @@
 								<th>Trạng thái</th>
 								<th>Tổng tiền</th>
 								<th>Ngày tạo</th>
-								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -85,7 +84,6 @@
 	                            		<td>${item.idStatus}</td>
 	                            		<td>${item.totalPrice}</td>
 	                            		<td>${item.createdDate}</td>
-	                            		<td><a href="/supplier/${item.id}/order" class="btn btn-primary"><i class="fas fa-arrow-alt-circle-right"></i></a></td>
 	                            	</tr>
 	                            </c:forEach>
 							</c:if>
