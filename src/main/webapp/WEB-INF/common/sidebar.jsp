@@ -61,7 +61,7 @@
             <i class="fa fa-globe"></i>
           </div>
           <div class="menu-text">
-            Danh sách nhập
+            Danh sách đơn hàng
           </div>
         </a>
       </div>

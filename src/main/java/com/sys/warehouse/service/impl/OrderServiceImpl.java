@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
@@ -20,7 +22,22 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+    public Map<String, Object> getInfo(Integer id) {
+        return (id != null) ? orderRepository.selectInfoById(id) : null;
+    }
+
+    @Override
     public void save(OrderIn order) {
         orderRepository.save(order);
+    }
+
+    @Override
+    public void updateStatus(Integer id) {
+        Optional<OrderIn> ood = orderRepository.findById(id);
+        if(ood.isPresent()){
+            OrderIn oi = ood.get();
+            oi.setIdStatus(2);
+            orderRepository.save(oi);
+        }
     }
 }

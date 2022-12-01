@@ -105,7 +105,7 @@
 			                            		<td>${item.price}</td>
 			                            		<td>${item.qty}</td>
 			                            		<td>${item.price * item.qty}</td>
-			                            		<td><button class="btn btn-danger"><i class="fas fa-times-circle"></i></button></td>
+			                            		<td><a href="/order/detail/remove?id=${item.oidId}&idOrderIn=${idOrder}" class="btn btn-danger"><i class="fas fa-times-circle"></i></a></td>
 			                            	</tr>
 			                            </c:forEach>
 									</c:if>
@@ -115,8 +115,22 @@
 		                            	</tr>
 		                            </c:if>
 			                  	</tbody>
+
+	                            <c:if test="${orderDetails.size() > 0}">
+								<tfoot>
+									<tr>
+										<td colspan="6">
+											<c:if test="${orderInfo.orderIdStatus == 1}">
+												<a href="/order/save?id=${idOrder}" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</a>
+											</c:if>
+											<a href="#" class="ms-1 btn btn-info" data-bs-toggle="modal" data-bs-target="#modalPrint"><i class="fas fa-print"></i> In</a>
+										</td>
+									</tr>
+								</tfoot>
+								</c:if>								
 			                </table>
 			            	</form>
+			            	
 						</div>
 					</div>
 				</div>
@@ -163,6 +177,110 @@
 	  </div>
 	</div>
     </form:form>
+
+	<div class="modal fade" id="modalPrint" tabindex="-1" aria-labelledby="modalPrintLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-xl">
+	    <div class="modal-content">
+	      	<div class="modal-header">
+	        	<h5 class="modal-title" id="modalPrintLabel">Thông tin đơn hàng</h5>
+	        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      	</div>
+	      	<div class="modal-body">
+        		<table class="table table-bordered m-0">
+		            <tr class="bg-blue text-white">
+		              <th class="w-50">I. Thông tin nhân viên</th>
+		              <th class="w-50">II. Thông tin NCC</th>
+		            </tr>
+		            <tr>
+		              <td class="p-0">
+		                <ul class="list-group">
+		                  <li class="list-group-item p-0">
+		                    <div class="form-floating">
+		                      <div class="form-control border-0"><em>${orderInfo.userPhone}</em></div>
+		                      <label class="d-flex align-items-center fs-13px">
+		                        Số ĐT
+		                      </label>
+		                    </div>
+		                  </li>
+		                  <li class="list-group-item p-0">
+		                    <div class="form-floating">
+		                      <div class="form-control border-0"><em>${orderInfo.userName}</em></div>
+		                      <label class="d-flex align-items-center fs-13px">
+		                        Họ tên
+		                      </label>
+		                    </div>
+		                  </li>
+		                  <li class="list-group-item p-0">
+		                    <div class="form-floating">
+		                      <div class="form-control border-0"><em>${orderInfo.userAddress}</em></div>
+		                      <label class="d-flex align-items-center fs-13px">
+		                        Địa chỉ
+		                      </label>
+		                    </div>
+		                  </li>
+		                </ul>
+		              </td>
+		              <td class="p-0">
+		                <ul class="list-group">
+		                  <li class="list-group-item p-0">
+		                    <div class="form-floating">
+		                      <div class="form-control border-0"><em>${orderInfo.supplierPhone}</em></div>
+		                      <label for="ip-customer-phone" class="d-flex align-items-center fs-13px">
+		                        Số ĐT
+		                      </label>
+		                    </div>
+		                  </li>
+		                  <li class="list-group-item p-0">
+		                    <div class="form-floating">
+		                      <div class="form-control border-0"><em>${orderInfo.supplierName}</em></div>
+		                      <label for="ip-customer-name" class="d-flex align-items-center fs-13px">
+		                        Họ tên
+		                      </label>
+		                    </div>
+		                  </li>
+		                  <li class="list-group-item p-0">
+		                    <div class="form-floating">
+		                      <div class="form-control border-0"><em>${orderInfo.supplierAddress}</em></div>
+		                      <label for="ip-customer-address" class="d-flex align-items-center fs-13px">
+		                        Địa chỉ
+		                      </label>
+		                    </div>
+		                  </li>
+		                </ul>
+		              </td>
+		            </tr>
+		            <tr>
+		              <td colspan="2">
+		                <table id="tbl-cart-modal" class="table table-bordered m-0">
+		                  <thead>
+		                    <tr class="bg-info">
+		                      	<th>Số seri</th>
+		                      	<th>Tên SP</th>
+		                      	<th>Giá(đ)</th>
+		                      	<th>Số lượng</th>
+		                      	<th>Thành tiền(đ)</th>
+		                    </tr>
+		                  </thead>
+		                  <tbody>
+		                  	<c:forEach items="${orderDetails}" var="item" varStatus="loop">
+                            	<tr data-id-product="${item.id}">
+                            		<td>${item.code}</td>
+                            		<td>${item.name}</td>
+                            		<td>${item.price}</td>
+                            		<td>${item.qty}</td>
+                            		<td>${item.price * item.qty}</td>
+                            	</tr>
+                            </c:forEach>
+		                  </tbody>
+		                </table>
+		              </td>
+		            </tr>
+	          	</table>
+        	</div>
+	    </div>
+	  </div>
+	</div>
+
 	<!-- * Modal -->
 </body>
 <script>
@@ -217,13 +335,18 @@
       			<td>`+data.code+`</td>
       			<td>`+data.name+`</td>
       			<td>`+data.price+`</td>
-      			<td><input type="number" name="qty" data-price="`+data.price+`" value="1" ></td>
-      			<td id="price-qty">`+data.price+`</td>
+      			<td><input type="number" name="qty" data-price="`+data.price+`" min="1" value="1" onchange="changeQty(this)" onkeyup="changeQty(this)"></td>
+      			<td id="total_price">`+data.price+`</td>
       			<td>
       				<button type="button" class="btn btn-danger">Hủy</button>
       				<button type="submit" class="ms-1 btn btn-primary">Lưu</button>
   				</td>
       		</tr>`
+	}
+
+	function changeQty(obj){
+		var total = obj.dataset.price * obj.value
+		$("#total_price").html(total)
 	}
 </script>
 </html>

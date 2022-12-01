@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS `order_in` (
   `total_price` double DEFAULT NULL,
   `created_date` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;
 
--- Dumping data for table warehouse.order_in: ~12 rows (approximately)
+-- Dumping data for table warehouse.order_in: ~15 rows (approximately)
 DELETE FROM `order_in`;
 /*!40000 ALTER TABLE `order_in` DISABLE KEYS */;
 INSERT INTO `order_in` (`id`, `code`, `id_supplier`, `id_user`, `id_status`, `total_price`, `created_date`) VALUES
@@ -45,7 +45,17 @@ INSERT INTO `order_in` (`id`, `code`, `id_supplier`, `id_user`, `id_status`, `to
 	(10, '1669776136740', 1, 1, 1, 100000, '2022-11-30 09:42:16'),
 	(11, '1669776253577', 1, 1, 1, 100000, '2022-11-30 09:44:13'),
 	(12, '1669776322707', 1, 1, 1, 150000, '2022-11-30 09:45:22'),
-	(13, '1669802501738', 1, 1, 1, 100000, '2022-11-30 17:01:41');
+	(13, '1669802501738', 1, 1, 1, 100000, '2022-11-30 17:01:41'),
+	(14, '1669870152513', 1, 1, 1, 100000, '2022-12-01 11:49:12'),
+	(15, '1669875238417', 1, 1, 1, 150000, '2022-12-01 13:13:58'),
+	(16, '1669876034387', 1, 1, 1, 340000, '2022-12-01 13:27:14'),
+	(17, '1669880012336', 1, 1, 1, 50000, '2022-12-01 14:33:32'),
+	(18, '1669881560300', 1, 1, 1, 450000, '2022-12-01 14:59:20'),
+	(19, '1669881666452', 1, 1, 1, 750000, '2022-12-01 15:01:06'),
+	(20, '1669881811445', 2, 1, 1, 23000, '2022-12-01 15:03:31'),
+	(21, '1669882059232', 2, 1, 2, 22000, '2022-12-01 15:07:39'),
+	(22, '1669882758046', 1, 1, 1, 50000, '2022-12-01 15:19:18'),
+	(23, '1669882839161', 1, 1, 1, 150000, '2022-12-01 15:20:39');
 /*!40000 ALTER TABLE `order_in` ENABLE KEYS */;
 
 -- Dumping structure for table warehouse.order_in_detail
@@ -55,9 +65,9 @@ CREATE TABLE IF NOT EXISTS `order_in_detail` (
   `id_product` int(11) DEFAULT NULL,
   `qty` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb3;
 
--- Dumping data for table warehouse.order_in_detail: ~15 rows (approximately)
+-- Dumping data for table warehouse.order_in_detail: ~17 rows (approximately)
 DELETE FROM `order_in_detail`;
 /*!40000 ALTER TABLE `order_in_detail` DISABLE KEYS */;
 INSERT INTO `order_in_detail` (`id`, `id_order_in`, `id_product`, `qty`) VALUES
@@ -75,8 +85,18 @@ INSERT INTO `order_in_detail` (`id`, `id_order_in`, `id_product`, `qty`) VALUES
 	(12, 12, 2, 1),
 	(13, 10, 1, 1),
 	(14, 11, 1, 1),
-	(15, 12, 1, 1),
-	(16, 13, 1, 1);
+	(15, 15, 2, 1),
+	(17, 14, 1, 1),
+	(19, 19, 2, 3),
+	(20, 20, 10, 1),
+	(21, 21, 10, 1),
+	(22, 18, 1, 3),
+	(23, 23, 2, 1),
+	(24, 19, 3, 5),
+	(25, 20, 9, 3),
+	(26, 21, 9, 2),
+	(27, 22, 2, 1),
+	(28, 23, 1, 1);
 /*!40000 ALTER TABLE `order_in_detail` ENABLE KEYS */;
 
 -- Dumping structure for table warehouse.product
@@ -88,9 +108,9 @@ CREATE TABLE IF NOT EXISTS `product` (
   `price` double DEFAULT NULL,
   `qty` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 
--- Dumping data for table warehouse.product: ~5 rows (approximately)
+-- Dumping data for table warehouse.product: ~8 rows (approximately)
 DELETE FROM `product`;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
 INSERT INTO `product` (`id`, `id_supplier`, `code`, `name`, `price`, `qty`) VALUES
@@ -101,7 +121,9 @@ INSERT INTO `product` (`id`, `id_supplier`, `code`, `name`, `price`, `qty`) VALU
 	(5, 1, '1669791676857c', 'aaaa', 10, 1),
 	(6, 1, '1669791792329c', 'aaaa', 10, 1),
 	(7, 1, '1669791982587c', 'aaaa', 10, 1),
-	(8, 1, '1669792417408c', 'aaaa', 10, 1);
+	(8, 1, '1669792417408c', 'aaaa', 10, 1),
+	(9, 2, 'sp01', 'sp01', 1000, 0),
+	(10, 2, 'sp02', 'sp02', 20000, 0);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 
 -- Dumping structure for table warehouse.supplier
@@ -115,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   UNIQUE KEY `code` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
 
--- Dumping data for table warehouse.supplier: ~7 rows (approximately)
+-- Dumping data for table warehouse.supplier: ~9 rows (approximately)
 DELETE FROM `supplier`;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
 INSERT INTO `supplier` (`id`, `code`, `name`, `address`, `phone`) VALUES

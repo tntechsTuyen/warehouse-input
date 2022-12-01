@@ -15,10 +15,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -54,6 +51,7 @@ public class OrderController {
     public String goAdd(Model model, OrderIn search){
         model.addAttribute("products", productService.getList(new Product(search.getIdSupplier())));
         model.addAttribute("orderDetails", orderDetailService.selectList(new OrderInDetail(search.getId())));
+        model.addAttribute("orderInfo", orderService.getInfo(search.getId()));
         model.addAttribute("idOrder", search.getId());
         model.addAttribute("idSupplier", search.getIdSupplier());
         model.addAttribute("productForm", new Product(search.getIdSupplier()));
@@ -61,7 +59,7 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    public String doAdd(HttpServletRequest request, Model model, OrderInDetail orderInDetail, OrderIn order){
+    public String doAdd(HttpServletRequest request, OrderInDetail orderInDetail, OrderIn order){
 
         if(orderInDetail.getIdOrderIn() == null || orderInDetail.getIdOrderIn() == 0){
             order.setCode(new Date().getTime()+"");
@@ -76,5 +74,11 @@ public class OrderController {
         }
         orderDetailService.save(orderInDetail);
         return String.format("redirect: /order/add?idSupplier=%d&id=%d", order.getIdSupplier(), order.getId());
+    }
+
+    @GetMapping("/save")
+    public String doSave(HttpServletRequest request,@RequestParam("id") Integer id){
+        orderService.updateStatus(id);
+        return UrlUtils.getPreviousPageByRequest(request).orElse("/");
     }
 }

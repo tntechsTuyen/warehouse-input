@@ -33,7 +33,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 
     @Override
     public void delete(OrderInDetail orderInDetail) {
-//        orderDetailRepository.delete(orderInDetail);
+        orderDetailRepository.deleteById(orderInDetail.getId());
         orderRepository.updatePrice(orderInDetail.getIdOrderIn());
     }
 }

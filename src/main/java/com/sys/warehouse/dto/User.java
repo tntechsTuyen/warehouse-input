@@ -42,6 +42,9 @@ public class User {
     @Column(name = "role")
     private String role;
 
+    @Column(name = "address")
+    private String address;
+
     @CreationTimestamp
     @Column(name = "created_date", updatable = false)
     private Date createdDate;
