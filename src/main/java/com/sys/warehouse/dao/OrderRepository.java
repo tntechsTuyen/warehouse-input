@@ -23,14 +23,10 @@ public interface OrderRepository extends JpaRepository<OrderIn, Integer> {
             " , oi.code AS orderCode " +
             " , oi.idStatus AS orderIdStatus " +
             " , oi.createdDate AS orderCreatedDate " +
-            " , u.fullName AS userName " +
-            " , u.phone AS userPhone " +
-            " , u.address AS userAddress " +
             " , s.name AS supplierName " +
             " , s.phone AS supplierPhone " +
             " , s.address AS supplierAddress " +
             " FROM OrderIn oi " +
-            " INNER JOIN User u ON oi.idUser = u.id " +
             " INNER JOIN Supplier s ON oi.idSupplier = s.id " +
             " WHERE oi.id = :id ")
     Map<String, Object> selectInfoById(@Param("id") Integer id);

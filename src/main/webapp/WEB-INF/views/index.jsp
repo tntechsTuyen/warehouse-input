@@ -2,19 +2,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isELIgnored="false"%>
+<!DOCTYPE html>
 <html>
-<%@ include file="/WEB-INF/common/css.jsp"%>
-<%@ include file="/WEB-INF/common/js.jsp"%>
-<body class="pace-top">
-
-	<%@ include file="/WEB-INF/common/header.jsp"%>
-	<%@ include file="/WEB-INF/common/sidebar.jsp"%>
-
-	<div id="loader" class="app-loader">
-		<span class="spinner"></span>
-	</div>
-	<div id="app" class="app">
-		<a href="/supplier" class="btn btn-primary">Create new</a href="/supplier">
-	</div>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="/resources/bootstrap/css/bootstrap.min.css">
+	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/resources/jquery/jquery.min.js"></script>
+</head>
+<body>
+	<div id="content" class="container">
+		<ul class="list-group list-group-horizontal mt-2">
+			<li class="list-group-item"><a href="/supplier">Nhà cung cấp</a></li>
+			<li class="list-group-item"><a href="/order">Đơn hàng</a></li>
+		</ul>
+    </div>
 </body>
 </html>

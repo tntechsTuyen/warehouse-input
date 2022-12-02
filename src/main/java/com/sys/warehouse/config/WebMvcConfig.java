@@ -1,8 +1,5 @@
 package com.sys.warehouse.config;
 
-import com.sys.warehouse.config.filter.RequestFilter;
-import com.sys.warehouse.service.IProductService;
-import com.sys.warehouse.service.impl.ProductServiceImpl;
 import org.springframework.context.annotation.Bean;
 
 import org.springframework.context.annotation.ComponentScan;
@@ -30,24 +27,12 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		return resolver;
 	}
 
-	@Bean
-	public RequestFilter requestFilter(){
-		return new RequestFilter();
-	}
-
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
           .addResourceHandler("/resources/**")
           .addResourceLocations("/resources/");
     }
-
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(requestFilter())
-				.addPathPatterns("/**")
-				.excludePathPatterns("/resources/**", "/login");
-	}
 
 	@Bean
 	public CharacterEncodingFilter characterEncodingFilter() {

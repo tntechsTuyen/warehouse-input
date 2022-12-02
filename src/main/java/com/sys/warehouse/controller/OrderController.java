@@ -1,18 +1,13 @@
 package com.sys.warehouse.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.sys.warehouse.dto.OrderIn;
 import com.sys.warehouse.dto.OrderInDetail;
 import com.sys.warehouse.dto.Product;
-import com.sys.warehouse.dto.User;
 import com.sys.warehouse.service.IOrderDetailService;
 import com.sys.warehouse.service.IOrderService;
 import com.sys.warehouse.service.IProductService;
-import com.sys.warehouse.service.IUserService;
 import com.sys.warehouse.utils.UrlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +17,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/order")
-@PropertySource({ "classpath:database.properties" })
 public class OrderController {
-
-    @Autowired
-    private Environment env;
 
     @Autowired
     private IOrderService orderService;
@@ -37,12 +28,8 @@ public class OrderController {
     @Autowired
     private IOrderDetailService orderDetailService;
 
-    @Autowired
-    private IUserService userService;
-
-    @GetMapping("/list")
+    @GetMapping("")
     public String goList(Model model, OrderIn search){
-        model.addAttribute("search", search);
         model.addAttribute("list", orderService.getList(search));
         return "order/list";
     }
@@ -64,7 +51,6 @@ public class OrderController {
         if(orderInDetail.getIdOrderIn() == null || orderInDetail.getIdOrderIn() == 0){
             order.setCode(new Date().getTime()+"");
             order.setIdStatus(1);
-            order.setIdUser((Integer) request.getSession().getAttribute(env.getProperty("session.login")));
             order.setTotalPrice(orderInDetail.getQty() * orderInDetail.getPrice());
             orderService.save(order);
             orderInDetail.setIdOrderIn(order.getId());

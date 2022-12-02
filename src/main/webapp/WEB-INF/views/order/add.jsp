@@ -2,140 +2,112 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isELIgnored="false"%>
+<!DOCTYPE html>
 <html>
-<%@ include file="/WEB-INF/common/css.jsp"%>
-<%@ include file="/WEB-INF/common/js.jsp"%>
-<body class="pace-top">
-	<div id="loader" class="app-loader">
-		<span class="spinner"></span>
-	</div>
-
-	<div id="app" class="app app-header-fixed app-sidebar-fixed">
-		<%@ include file="/WEB-INF/common/header.jsp"%>
-		<%@ include file="/WEB-INF/common/sidebar.jsp"%>
-		
-		<div id="content" class="app-content">
-			<ol class="breadcrumb float-xl-end">
-				<li class="breadcrumb-item"><a href="javascript:;">Trang chủ</a></li>
-				<li class="breadcrumb-item"><a href="javascript:;">Quản lý đơn hàng</a></li>
-				<li class="breadcrumb-item active">Tạo đơn hàng</li>
-			</ol>
-
-			<h1 class="page-header d-flex align-items-center">
-			  Tạo đơn hàng
-			</h1>
-			<div class="row">
-				<div class="col-4">
-					<div class="panel panel-inverse">
-						<div class="panel-heading">
-					    	<h4 class="panel-title">Danh sách sản phẩm</h4>
-						    <div class="panel-heading-btn">
-						    	<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
-						    	<a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
-						    	<a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
-						    </div>
-						</div>
-						<div class="panel-body">
-							<div class="input-group mb-3">
-                                <span class="input-group-text">Tìm kiếm</span>
-                                <input id="ip-search" class="form-control"/>
-                                <button class="btn btn-primary btn-create-product d-none" data-bs-toggle="modal" data-bs-target="#modalAddNew"><i class="fas fa-plus-circle me-1"></i>Create</button>
-                            </div>
-							<table id="tbl-product" class="table table-bordered">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Mã</th>
-										<th>Tên</th>
-										<th>Giá</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:if test="${products.size() > 0}">
-										<c:forEach items="${products}" var="item" varStatus="loop">
-			                            	<tr>
-			                            		<td>${loop.index + 1}</td>
-			                            		<td>${item.code}</td>
-			                            		<td>${item.name}</td>
-			                            		<td>${item.price}</td>
-			                            		<td><button class="btn btn-info btn-add-product" data-id="${item.id}" data-code="${item.code}" data-name="${item.name}" data-price="${item.price}"><i class="fas fa-plus-circle"></i></button></td>
-			                            	</tr>
-			                            </c:forEach>
-									</c:if>
-		                            <c:if test="${products.size() == 0}">
-		                            	<tr>
-		                            		<td class="text-center" colspan="5"><i class="fas fa-inbox"></i> Không có dữ liệu</td>
-		                            	</tr>
-		                            </c:if>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<div class="col-8">
-					<div class="panel panel-inverse">
-						<div class="panel-heading">
-					    	<h4 class="panel-title">Thông tin đơn hàng</h4>
-						    <div class="panel-heading-btn">
-						    	<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
-						    	<a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
-						    	<a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
-						    </div>
-						</div>
-						<div class="panel-body">
-							<form method="POST">
-							<table id="tbl-product-selected" class="table table-bordered m-0">
-			                  	<thead>
-				                    <tr class="bg-info">
-				                      	<th>Số seri</th>
-				                      	<th>Tên SP</th>
-				                      	<th>Giá(đ)</th>
-				                      	<th>Số lượng</th>
-				                      	<th>Thành tiền(đ)</th>
-				                      	<th></th>
-				                    </tr>
-			                  	</thead>
-			                  	<tbody>
-									<c:if test="${orderDetails.size() > 0}">
-										<c:forEach items="${orderDetails}" var="item" varStatus="loop">
-			                            	<tr data-id-product="${item.id}">
-			                            		<td>${item.code}</td>
-			                            		<td>${item.name}</td>
-			                            		<td>${item.price}</td>
-			                            		<td>${item.qty}</td>
-			                            		<td>${item.price * item.qty}</td>
-			                            		<td><a href="/order/detail/remove?id=${item.oidId}&idOrderIn=${idOrder}" class="btn btn-danger"><i class="fas fa-times-circle"></i></a></td>
-			                            	</tr>
-			                            </c:forEach>
-									</c:if>
-		                            <c:if test="${orderDetails.size() == 0}">
-		                            	<tr>
-		                            		<td data-type="null" class="text-center" colspan="6"><i class="fas fa-inbox"></i> Không có dữ liệu</td>
-		                            	</tr>
-		                            </c:if>
-			                  	</tbody>
-
-	                            <c:if test="${orderDetails.size() > 0}">
-								<tfoot>
-									<tr>
-										<td colspan="6">
-											<c:if test="${orderInfo.orderIdStatus == 1}">
-												<a href="/order/save?id=${idOrder}" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</a>
-											</c:if>
-											<a href="#" class="ms-1 btn btn-info" data-bs-toggle="modal" data-bs-target="#modalPrint"><i class="fas fa-print"></i> In</a>
-										</td>
-									</tr>
-								</tfoot>
-								</c:if>								
-			                </table>
-			            	</form>
-			            	
-						</div>
-					</div>
-				</div>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="/resources/bootstrap/css/bootstrap.min.css">
+	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/resources/jquery/jquery.min.js"></script>
+</head>
+<body>
+	
+	<div id="content" class="container">
+		<ul class="list-group list-group-horizontal mt-2">
+			<li class="list-group-item"><a href="/supplier">Nhà cung cấp</a></li>
+			<li class="list-group-item"><a href="/order">Đơn hàng</a></li>
+		</ul>
+		<h1>Tạo đơn hàng</h1>
+		<div class="row">
+			<div class="col-4">
+		    	<h4 class="panel-title">Danh sách sản phẩm</h4>
+				<div class="input-group mb-3">
+	                <span class="input-group-text">Tìm kiếm</span>
+	                <input id="ip-search" class="form-control"/>
+	                <button class="btn btn-primary btn-create-product d-none" data-bs-toggle="modal" data-bs-target="#modalAddNew"><i class="fas fa-plus-circle me-1"></i>Create</button>
+	            </div>
+				<table id="tbl-product" class="table table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Mã</th>
+							<th>Tên</th>
+							<th>Giá</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:if test="${products.size() > 0}">
+							<c:forEach items="${products}" var="item" varStatus="loop">
+	                        	<tr>
+	                        		<td>${loop.index + 1}</td>
+	                        		<td>${item.code}</td>
+	                        		<td>${item.name}</td>
+	                        		<td>${item.price}</td>
+	                        		<td><button class="btn btn-info btn-add-product" data-id="${item.id}" data-code="${item.code}" data-name="${item.name}" data-price="${item.price}">+</button></td>
+	                        	</tr>
+	                        </c:forEach>
+						</c:if>
+	                    <c:if test="${products.size() == 0}">
+	                    	<tr>
+	                    		<td class="text-center" colspan="5"><i class="fas fa-inbox"></i> Không có dữ liệu</td>
+	                    	</tr>
+	                    </c:if>
+					</tbody>
+				</table>
 			</div>
-			
+
+			<div class="col-8">
+		    	<h4 class="panel-title">Thông tin đơn hàng</h4>
+				<form method="POST">
+					<table id="tbl-product-selected" class="table table-bordered m-0">
+	                  	<thead>
+		                    <tr class="bg-info">
+		                      	<th>Số seri</th>
+		                      	<th>Tên SP</th>
+		                      	<th>Giá(đ)</th>
+		                      	<th>Số lượng</th>
+		                      	<th>Thành tiền(đ)</th>
+		                      	<th></th>
+		                    </tr>
+	                  	</thead>
+	                  	<tbody>
+							<c:if test="${orderDetails.size() > 0}">
+								<c:forEach items="${orderDetails}" var="item" varStatus="loop">
+	                            	<tr data-id-product="${item.id}">
+	                            		<td>${item.code}</td>
+	                            		<td>${item.name}</td>
+	                            		<td>${item.price}</td>
+	                            		<td>${item.qty}</td>
+	                            		<td>${item.price * item.qty}</td>
+	                            		<td><a href="/order/detail/remove?id=${item.oidId}&idOrderIn=${idOrder}" class="btn btn-danger">x</a></td>
+	                            	</tr>
+	                            </c:forEach>
+							</c:if>
+	                        <c:if test="${orderDetails.size() == 0}">
+	                        	<tr>
+	                        		<td data-type="null" class="text-center" colspan="6"><i class="fas fa-inbox"></i> Không có dữ liệu</td>
+	                        	</tr>
+	                        </c:if>
+	                  	</tbody>
+
+	                    <c:if test="${orderDetails.size() > 0}">
+						<tfoot>
+							<tr>
+								<td colspan="6">
+									<c:if test="${orderInfo.orderIdStatus == 1}">
+										<a href="/order/save?id=${idOrder}" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</a>
+									</c:if>
+									<a href="#" class="ms-1 btn btn-info" data-bs-toggle="modal" data-bs-target="#modalPrint"><i class="fas fa-print"></i> In</a>
+								</td>
+							</tr>
+						</tfoot>
+						</c:if>								
+	                </table>
+	        	</form>
+		            	
+			</div>
 		</div>
 	</div>
 
@@ -187,7 +159,7 @@
 	      	</div>
 	      	<div class="modal-body">
         		<table class="table table-bordered m-0">
-		            <tr class="bg-blue text-white">
+		            <tr>
 		              <th class="w-50">I. Thông tin nhân viên</th>
 		              <th class="w-50">II. Thông tin NCC</th>
 		            </tr>
@@ -196,7 +168,7 @@
 		                <ul class="list-group">
 		                  <li class="list-group-item p-0">
 		                    <div class="form-floating">
-		                      <div class="form-control border-0"><em>${orderInfo.userPhone}</em></div>
+		                      <div class="form-control border-0"><em>0123456789</em></div>
 		                      <label class="d-flex align-items-center fs-13px">
 		                        Số ĐT
 		                      </label>
@@ -204,7 +176,7 @@
 		                  </li>
 		                  <li class="list-group-item p-0">
 		                    <div class="form-floating">
-		                      <div class="form-control border-0"><em>${orderInfo.userName}</em></div>
+		                      <div class="form-control border-0"><em>Admin</em></div>
 		                      <label class="d-flex align-items-center fs-13px">
 		                        Họ tên
 		                      </label>
@@ -212,7 +184,7 @@
 		                  </li>
 		                  <li class="list-group-item p-0">
 		                    <div class="form-floating">
-		                      <div class="form-control border-0"><em>${orderInfo.userAddress}</em></div>
+		                      <div class="form-control border-0"><em>HN</em></div>
 		                      <label class="d-flex align-items-center fs-13px">
 		                        Địa chỉ
 		                      </label>

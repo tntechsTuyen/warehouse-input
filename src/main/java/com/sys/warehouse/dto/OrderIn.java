@@ -22,9 +22,6 @@ public class OrderIn {
     @Column(name = "id_supplier")
     private Integer idSupplier = 0;
 
-    @Column(name = "id_user")
-    private Integer idUser;
-
     @Column(name = "id_status")
     private Integer idStatus;
 
